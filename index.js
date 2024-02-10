@@ -33,7 +33,7 @@ const client = new MongoClient(uri, {
 async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
-    await client.connect();
+    // await client.connect();
 
     const carCollection = client.db("carDB").collection("cars");
     const userCollection = client.db("carDB").collection("users");
@@ -56,7 +56,6 @@ async function run() {
     app.get("/newcars/:brandname", async (req, res) => {
       const brandName = req.params.brandname;
       const query = { brand: brandName };
-      console.log(brandName);
       const cursor = carCollection.find(query);
       const result = await cursor.toArray();
       res.send(result);
@@ -64,7 +63,7 @@ async function run() {
 
     app.post("/cars", async (req, res) => {
       const newCar = req.body;
-      console.log(newCar);
+      // console.log(newCar);
       const result = await carCollection.insertOne(newCar);
       res.send(result);
     });
@@ -74,7 +73,7 @@ async function run() {
       const filter = { _id: new ObjectId(id) };
       const options = { upsert: true };
       const updatedCar = req.body;
-      console.log(updatedCar);
+      // console.log(updatedCar);
       const car = {
         $set: {
           title: updatedCar.title,
@@ -113,7 +112,7 @@ async function run() {
 
     app.post("/users", async (req, res) => {
       const newUser = req.body;
-      console.log(newUser);
+      // console.log(newUser);
       const result = await userCollection.insertOne(newUser);
       res.send(result);
     });
@@ -147,10 +146,10 @@ async function run() {
     });
 
     // Send a ping to confirm a successful connection
-    await client.db("admin").command({ ping: 1 });
-    console.log(
-      "Pinged your deployment. You successfully connected to MongoDB!"
-    );
+    // await client.db("admin").command({ ping: 1 });
+    // console.log(
+    //   "Pinged your deployment. You successfully connected to MongoDB!"
+    // );
   } finally {
     // Ensures that the client will close when you finish/error
     // await client.close();
